@@ -18,8 +18,8 @@ const Navbar = () => {
         </button>
       </div>
       <ul className={`navbar-links ${isMobileMenuOpen ? 'open' : ''}`}>
-        <li><a href="/signin">Sign In</a></li>
-        <li><a href="/subscribe">Subscribe</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
       </ul>
     </nav>
   );
