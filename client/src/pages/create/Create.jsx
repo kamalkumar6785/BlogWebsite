@@ -4,18 +4,19 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { storage } from "../../Firebase"; 
+import { storage } from "../../Firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import '../../styles/Create.css'
+import "../../styles/Create.css";
 
 const Write = () => {
   const state = useLocation().state;
-  const [value, setValue] = useState(state?.desc || "");
+  const [value, setValue] = useState(state?.content || "");
   const [title, setTitle] = useState(state?.title || "");
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState(state?.cat || "");
+  const [category, setCat] = useState(state?.category || "");
   const [err, setError] = useState(null);
   const navigate = useNavigate();
+  const baseUrl = 'http://localhost:4000/api';
 
   const upload = async () => {
     if (!file) return "";
@@ -26,9 +27,7 @@ const Write = () => {
 
       uploadTask.on(
         "state_changed",
-        (snapshot) => {
-        
-        },
+        (snapshot) => {},
         (error) => {
           console.error("Error uploading file:", error);
           setError("Error uploading file. Please try again.");
@@ -46,8 +45,6 @@ const Write = () => {
           }
         }
       );
-
-
     });
   };
 
@@ -58,16 +55,21 @@ const Write = () => {
       const imgUrl = await upload();
       const postData = {
         title,
-        desc: value,
-        cat,
+        content: value,
+        category,
         img: file ? imgUrl : "",
         date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       };
 
+
       if (state) {
-        await axios.put(`/posts/${state.id}`, postData);
+        await axios.put(`/posts/${state.id}`, postData,{
+            withCredentials: true, 
+          });
       } else {
-        await axios.post(`/posts/`, postData);
+        await axios.post(`${baseUrl}/blog`, postData,{
+            withCredentials: true, 
+          });
       }
 
       navigate("/");
@@ -97,14 +99,14 @@ const Write = () => {
       </div>
       <div className="menu">
         <div className="item">
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: "center" }}>
             <h1>Select Category</h1>
           </div>
 
           <div className="cat">
             <input
               type="radio"
-              checked={cat === "science"}
+              checked={category === "science"}
               name="cat"
               value="science"
               id="science"
@@ -116,7 +118,7 @@ const Write = () => {
           <div className="cat">
             <input
               type="radio"
-              checked={cat === "art"}
+              checked={category === "art"}
               name="cat"
               value="art"
               id="art"
@@ -128,7 +130,7 @@ const Write = () => {
           <div className="cat">
             <input
               type="radio"
-              checked={cat === "entertainment"}
+              checked={category === "entertainment"}
               name="cat"
               value="entertainment"
               id="entertainment"
@@ -140,7 +142,7 @@ const Write = () => {
           <div className="cat">
             <input
               type="radio"
-              checked={cat === "finance"}
+              checked={category === "finance"}
               name="cat"
               value="finance"
               id="finance"
@@ -152,7 +154,7 @@ const Write = () => {
           <div className="cat">
             <input
               type="radio"
-              checked={cat === "health"}
+              checked={category === "health"}
               name="cat"
               value="health"
               id="health"
@@ -162,48 +164,45 @@ const Write = () => {
           </div>
 
           <div className="cat">
-        <input
-            type="radio"
-            checked={cat === "gaming"}
-            name="cat"
-            value="gaming"
-            id="gaming"
-            onChange={(e) => setCat(e.target.value)}
-        />
-        <label htmlFor="gaming">Gaming 🎮</label>
-        </div>
+            <input
+              type="radio"
+              checked={category === "gaming"}
+              name="cat"
+              value="gaming"
+              id="gaming"
+              onChange={(e) => setCat(e.target.value)}
+            />
+            <label htmlFor="gaming">Gaming 🎮</label>
+          </div>
 
+          <div className="cat">
+            <input
+              type="radio"
+              checked={category === "news"}
+              name="cat"
+              value="news"
+              id="news"
+              onChange={(e) => setCat(e.target.value)}
+            />
+            <label htmlFor="news">NEWS 📰</label>
+          </div>
 
-        <div className="cat">
-        <input
-            type="radio"
-            checked={cat === "news"}
-            name="cat"
-            value="news"
-            id="news"
-            onChange={(e) => setCat(e.target.value)}
-        />
-        <label htmlFor="news">NEWS 📰</label>
-        </div>
+          {/* Adding a margin-bottom to the last category */}
+          <div style={{ marginBottom: "20px" }}></div>
 
-
-        {/* Adding a margin-bottom to the last category */}
-        <div style={{ marginBottom: '20px' }}></div> 
-
-        <input
-        style={{ display: "none" }}
-        type="file"
-        id="file"
-        name="file"
-        onChange={(e) => setFile(e.target.files[0])}
-        />
-        <label className="file" htmlFor="file" style={{ marginTop: '20px' }}>
-        Upload Image
-        </label>
-
+          <input
+            style={{ display: "none" }}
+            type="file"
+            id="file"
+            name="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <label className="file" htmlFor="file" style={{ marginTop: "20px" }}>
+            Upload Image
+          </label>
 
           <div className="buttons">
-            <button  onClick={handleClick}>Publish Blog</button>
+            <button onClick={handleClick}>Publish Blog</button>
           </div>
         </div>
         {err && <p className="error">{err}</p>}

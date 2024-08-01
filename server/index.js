@@ -4,6 +4,7 @@ const app = express();
 const authRoutes = require('./routes/authRoute')
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const blogRoutes = require('./routes/blogRoute')
 
 
 
@@ -32,8 +33,8 @@ app.use(express.urlencoded({extended:false}));
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/blog", blogRoutes);
 // app.use("/api/users", userRoutes);
-// app.use("/api/posts", postRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
