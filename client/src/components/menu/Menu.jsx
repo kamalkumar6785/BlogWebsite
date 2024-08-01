@@ -19,12 +19,12 @@ const Menu = ({cat}) => {
  
   return (
     <div className="menu">
-      <h1>Other posts you may like</h1>
+      <h1>Other posts you may slike</h1>
       {posts.map((post) => (
-        <div className="post" key={post.id}>
+        <div className="menupost" key={post.id}>
           <img src={`../upload/${post?.img}`} alt="" />
           <h2>{post.title}</h2>
-          <button>Read More</button>
+          <button style={{color:'black'}}>Read More</button>
         </div>
       ))}
     </div>

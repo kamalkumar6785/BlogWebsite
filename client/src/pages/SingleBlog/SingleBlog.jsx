@@ -59,9 +59,9 @@ const SingleBlog = () => {
             alt=""
           />}
           <div className="info">
-            <p>Posted {moment(post.date).fromNow()} by  {post.username}</p>
+            <p>Posted {moment(post.date).fromNow()} by  {post.username && post.username}</p>
           </div>
-          {currentUser.username === post.username && (
+          { currentUser && (currentUser.username === post.username) && (
             <div className="edit">
               <Link to={`/create?edit=2`} state={post}>
                 <img src={Edit} alt="" />

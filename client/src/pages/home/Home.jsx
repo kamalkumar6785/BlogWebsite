@@ -35,7 +35,7 @@ const Home = () => {
               <div className="img">
                 <img src={post.img} alt="" />
               </div>
-              <div className="content">
+              <div className="Homecontent">
                 <h1>{post.title.slice(0, 20)}</h1>
                 <p>{getText(post.content).slice(0, 120)}...</p>
                 <button>Read More</button>
