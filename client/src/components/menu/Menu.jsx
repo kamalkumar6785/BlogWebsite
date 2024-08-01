@@ -1,7 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./Menu.css"; // Adjust the path according to your project structure
 
-const Menu = ({cat}) => {
+const Menu = ({ cat }) => {
   const [posts, setPosts] = useState([]);
   const baseUrl = 'http://localhost:4000/api';
 
@@ -16,17 +17,19 @@ const Menu = ({cat}) => {
     };
     fetchData();
   }, [cat]);
- 
+
   return (
-    <div className="menu">
-      <h1>Other posts you may slike</h1>
-      {posts.map((post) => (
-        <div className="menupost" key={post.id}>
-          <img src={`../upload/${post?.img}`} alt="" />
-          <h2>{post.title}</h2>
-          <button style={{color:'black'}}>Read More</button>
-        </div>
-      ))}
+    <div className="menu" style={{textAlign:'center'}}>
+      <h2>Recommended Blogs</h2>
+      <div className="menu-grid">
+        {posts.map((post) => (
+          <div className="menupost" key={post.id}>
+            <img src={post.img} alt=""  style={{height:'180px'}}/>
+            <h3>{post.title.slice(0,20)}</h3>
+            <button className="menubotton" style={{ display: 'none' }}>Read More</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

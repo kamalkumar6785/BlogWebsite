@@ -62,13 +62,14 @@
 }
 
 .login-button {
-  background-color: rgb(53, 53, 178);
+  background-color: rgb(30, 30, 95);
 }
 
 
 .login-button:hover {
   background-color: rgb(30, 30, 95);
 }
+
 
 .logout-button:hover {
   background-color: rgb(23, 3, 48);
@@ -80,6 +81,15 @@
 
 
 .logout-button:hover {
-  background-color: rgb(69, 19, 19);
+  background-color: red;
 }
 
+.create-button{
+  background-color: rgb(30, 30, 95);
+}
+
+
+.create-button:hover{
+
+  background-color: rgb(30, 30, 95);
+}

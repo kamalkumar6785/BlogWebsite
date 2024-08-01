@@ -8,7 +8,7 @@ import moment from "moment";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import DOMPurify from "dompurify";
-import Menu from "../../Menu";
+import Menu from "../../components/menu/Menu";
 import './Single.css'
 
 
