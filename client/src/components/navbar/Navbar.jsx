@@ -1,26 +1,31 @@
 // src/Navbar.js
-import React, { useState } from 'react';
+import React, { useContext,useState } from "react";
+import { Link } from "react-router-dom";
 import './Navbar.css';
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+import { AuthContext } from '../../context/authContext';
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
+const Navbar = () => {
+  const { currentUser, logout } = useContext(AuthContext);
+
+
+
 
   return (
     <nav className="navbar">
       <div className="navbar-brand">
         <a href="/">My Blog</a>
-        <button className="hamburger-menu" onClick={toggleMobileMenu}>
-          ☰
-        </button>
+     
       </div>
-      <ul className={`navbar-links ${isMobileMenuOpen ? 'open' : ''}`}>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
+          {currentUser ? (
+            
+            <span onClick={logout}>{currentUser.username+" "} Logout</span>
+          ) : (
+            <Link className="link" to="/login">
+              Login
+            </Link>
+          )}
+      
     </nav>
   );
 };

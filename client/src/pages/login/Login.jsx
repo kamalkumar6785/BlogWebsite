@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../styles/Login.css'; // Reusing the same CSS as Register
+import { AuthContext } from "../../context/authContext";
+
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -10,6 +12,12 @@ const Login = () => {
   });
   const [err, setError] = useState(null);
   const navigate = useNavigate();
+  const baseUrl = 'http://localhost:4000/api';
+
+
+  
+  const { login } = useContext(AuthContext);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +27,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/login", inputs);
-      navigate("/dashboard"); // Navigate to a different page upon successful login
+      await login(inputs)
+      navigate("/");
     } catch (err) {
-      setError(err.response?.data || "Login failed. Please try again.");
+      setError(err.response.data);
     }
   };
 

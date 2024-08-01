@@ -12,6 +12,7 @@ const Register = () => {
     password: "",
     profilepic: ""
   });
+  const baseUrl = 'http://localhost:4000/api';
   const [err, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -54,7 +55,7 @@ const Register = () => {
   const registerUser = async (profilePicUrl) => {
     console.log(profilePicUrl);
     try {
-      await axios.post("/auth/register", { ...inputs, profilepic: profilePicUrl });
+      await axios.post(`${baseUrl}/auth/register`, { ...inputs, profilepic: profilePicUrl });
       navigate("/login");
     } catch (err) {
       setError(err.response?.data || "Registration failed");
@@ -89,11 +90,10 @@ const Register = () => {
         <input
           type="file"
           name="profilepic"
-          placeholder="choose profile pic"
           onChange={handleFileChange}
         />
         <button onClick={handleSubmit}>Register</button>
-        {err && <p>{'Error Registering User !!'}</p>}
+        {err && <p>{err}</p>}
         <span>
           Do you have an account? <Link to="/login">Login</Link>
         </span>
