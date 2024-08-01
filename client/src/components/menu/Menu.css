@@ -15,6 +15,10 @@
   .menu h2{
     color: rgb(11, 2, 32);
   }
+
+  h3{
+    color: black;
+  }
   
   .menu-grid {
     display: grid;

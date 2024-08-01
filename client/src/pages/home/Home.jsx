@@ -41,7 +41,7 @@ const Home = () => {
             <div className="post">
               <div className="img-container">
                 <img src={post.img} alt="" className="post-img" />
-                <div className="category-label">{post.category}</div> {/* Category Label */}
+                <div className="category-label">{post.category}</div> 
               </div>
               <div className="Homecontent">
                 <h1>{post.title.slice(0, 20)}</h1>

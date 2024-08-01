@@ -34,7 +34,6 @@ app.use(express.urlencoded({extended:false}));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/blog", blogRoutes);
-// app.use("/api/users", userRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

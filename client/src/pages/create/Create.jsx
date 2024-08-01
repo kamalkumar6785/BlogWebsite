@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
@@ -17,20 +17,27 @@ const Create = () => {
   const [err, setError] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(state?.img || "");
   const navigate = useNavigate();
-  const baseUrl = 'http://localhost:4000/api';
-
+  const baseUrl = "http://localhost:4000/api";
+  const categoryEmojis = {
+    science: "🚀",
+    art: "🎨",
+    entertainment: "🎬",
+    finance: "💲",
+    health: "🩺",
+    gaming: "🎮",
+    news: "📰",
+  };
   // useEffect(() => {
-    
+
   // }, [file]);
 
   const upload = async (selectedFile) => {
-
     // if (!file) return "";
+
 
     console.log(selectedFile);
 
     try {
-
       const storageRef = ref(storage, `images/${selectedFile.name}`);
       const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
@@ -66,7 +73,6 @@ const Create = () => {
     e.preventDefault();
 
     try {
-
       const postData = {
         title,
         content: value,
@@ -92,21 +98,12 @@ const Create = () => {
     }
   };
 
-  const handleFileChange = async (e) => 
-    {
-
-      console.log("here")
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
-    console.log(e.target.files);
-    // setFile(selectedFile);
-      console.log(file);
     if (selectedFile) {
       try {
-        console.log("doing")
         const imgUrl = await upload(selectedFile);
         setPreviewUrl(imgUrl);
-        console.log(previewUrl);
-        console.log("done");
       } catch (error) {
         console.error("Error handling file change:", error);
         setError("Error handling file change. Please try again.");
@@ -140,7 +137,15 @@ const Create = () => {
             <h1>Select Category</h1>
           </div>
 
-          {["science", "art", "entertainment", "finance", "health", "gaming", "news"].map((cat) => (
+          {[
+            "science",
+            "art",
+            "entertainment",
+            "finance",
+            "health",
+            "gaming",
+            "news",
+          ].map((cat) => (
             <div className="cat" key={cat}>
               <input
                 type="radio"
@@ -150,20 +155,25 @@ const Create = () => {
                 id={cat}
                 onChange={(e) => setCat(e.target.value)}
               />
-              <label htmlFor={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</label>
+              <label htmlFor={cat}>
+                {cat.charAt(0).toUpperCase() + cat.slice(1) +" "+ categoryEmojis[cat]}
+              </label>
             </div>
           ))}
 
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
             <img
-              src={previewUrl || "https://linamed.com/wp-content/themes/dfd-native/assets/images/no_image_resized_675-450.jpg"}
+              src={
+                previewUrl ||
+                "https://linamed.com/wp-content/themes/dfd-native/assets/images/no_image_resized_675-450.jpg"
+              }
               alt="Selected File"
               style={{
-                height: '150px',
-                borderRadius: '12px',
-                display: 'block',
-                border: '1px solid black',
-                margin: '0 auto'
+                height: "150px",
+                borderRadius: "12px",
+                display: "block",
+                border: "1px solid black",
+                margin: "0 auto",
               }}
             />
           </div>

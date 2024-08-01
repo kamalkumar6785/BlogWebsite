@@ -76,7 +76,7 @@ const SingleBlog = () => {
             __html: DOMPurify.sanitize(post.content),
           }}
         ></p>      </div>
-      <Menu cat={post.category}/>
+      <Menu cat={post.category} currentPostId={post.id}/>
     </div>
   );
 };
