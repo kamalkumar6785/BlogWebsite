@@ -14,6 +14,7 @@ const Register = () => {
   });
   const baseUrl = 'http://localhost:4000/api';
   const [err, setError] = useState(null);
+  const [fileName, setFileName] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,6 +24,7 @@ const Register = () => {
 
   const handleFileChange = (e) => {
     setInputs(prev => ({ ...prev, profilepic: e.target.files[0] }));
+    setFileName(e.target.files[0]?.name || "");
   };
 
   const handleSubmit = async (e) => {
@@ -53,7 +55,6 @@ const Register = () => {
   };
 
   const registerUser = async (profilePicUrl) => {
-    console.log(profilePicUrl);
     try {
       await axios.post(`${baseUrl}/auth/register`, { ...inputs, profilepic: profilePicUrl });
       navigate("/login");
@@ -69,31 +70,40 @@ const Register = () => {
         <input
           required
           type="text"
-          placeholder="username"
+          placeholder="Username"
           name="username"
           onChange={handleChange}
         />
         <input
           required
           type="email"
-          placeholder="email"
+          placeholder="Email"
           name="email"
           onChange={handleChange}
         />
         <input
           required
           type="password"
-          placeholder="password"
+          placeholder="Password"
           name="password"
           onChange={handleChange}
         />
-        <input
-          type="file"
-          name="profilepic"
-          onChange={handleFileChange}
-        />
+        <div className="upload-section">
+          <label htmlFor="file-upload" className="file-upload-label">
+            <span className="upload-text">
+              {fileName || "Upload Profile Picture"}
+            </span>
+            <input
+              id="file-upload"
+              type="file"
+              name="profilepic"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+          </label>
+        </div>
         <button onClick={handleSubmit}>Register</button>
-        {err && <p>{err}</p>}
+        {err && <p className="error">{err}</p>}
         <span>
           Do you have an account? <Link to="/login">Login</Link>
         </span>

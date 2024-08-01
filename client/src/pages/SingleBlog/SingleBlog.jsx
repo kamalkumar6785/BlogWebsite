@@ -1,16 +1,13 @@
-
-import React, { useEffect, useState } from "react";
-import Edit from "../../img/edit.png";
-import Delete from "../../img/delete.png";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import { useContext } from "react";
-import { AuthContext } from "../../context/authContext";
 import DOMPurify from "dompurify";
 import Menu from "../../components/menu/Menu";
-import './Single.css'
-
+import { AuthContext } from "../../context/authContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import './Single.css';
 
 const SingleBlog = () => {
   const [post, setPost] = useState({});
@@ -35,38 +32,45 @@ const SingleBlog = () => {
     fetchData();
   }, [postId]);
 
-  const handleDelete = async ()=>{
+  const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${postId}`);
-      navigate("/")
+      await axios.delete(`${baseUrl}/blog/${postId}`, {
+        withCredentials: 'true'
+      });
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  const getText = (html) =>{
-    const doc = new DOMParser().parseFromString(html, "text/html")
-    return doc.body.textContent
-  }
+  const getText = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent;
+  };
 
   return (
     <div className="single">
       <div className="content">
         <img src={`../upload/${post?.img}`} alt="" />
         <div className="user">
-          {1 && <img 
+          {1 && <img
             src='https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'
             alt=""
           />}
           <div className="info">
-            <p>Posted {moment(post.date).fromNow()} by  {post.username && post.username}</p>
+            <p>Posted {moment(post.date).fromNow()} by {post.username && post.username}</p>
           </div>
-          { currentUser && (currentUser.username === post.username) && (
+          {currentUser && (currentUser.username === post.username) && (
             <div className="edit">
-              <Link to={`/create?edit=2`} state={post}>
-                <img src={Edit} alt="" />
+              <Link to={`/create?edit=${post.id}`} state={post}>
+                <FontAwesomeIcon icon={faEdit} className="edit-icon"  style={{textDecoration:'none',color:'green', height:'23px', marginRight:'5px'}}/>
               </Link>
-              <img onClick={handleDelete} src={Delete} alt="" />
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                className="delete-icon"
+                style={{textDecoration:'none',color:'red', height:'23px', marginLeft:'5px' ,  cursor: 'pointer'}}
+                onClick={handleDelete}
+              />
             </div>
           )}
         </div>
@@ -75,8 +79,9 @@ const SingleBlog = () => {
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(post.content),
           }}
-        ></p>      </div>
-      <Menu cat={post.category} currentPostId={post.id}/>
+        ></p>
+      </div>
+      <Menu cat={post.category} currentPostId={post.id} />
     </div>
   );
 };

@@ -21,7 +21,7 @@ const Menu = ({ cat ,currentPostId }) => {
 
   return (
     <div className="menu" style={{ textAlign: 'center' }}>
-    <h2>Recommended Blogs</h2>
+     {posts.filter(post => post.id !== currentPostId).length>0 && <h2>Recommended Blogs</h2>}
     <div className="menu-grid">
       {posts.filter(post => post.id !== currentPostId).map((post) => (
         <Link to={`/blog/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>

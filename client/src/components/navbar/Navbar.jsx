@@ -38,7 +38,11 @@ const Navbar = () => {
       <div className="navbar-actions">
         {currentUser ? (
           <div className="navbar-user">
-            <img src={currentUser.profilepic || 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'} alt="Profile" className="profile-pic"  style={{height:'50px'}}/>
+            <div style={{display:'flex',flexDirection:'row' ,alignItems:'center'}}>
+
+           <span style={{marginRight:'5px'}}>{currentUser.username}</span>
+            <img src={currentUser.profilepic || 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'} alt="Profile" className="profile-pic"  style={{height:'40px'}}/>
+            </ div>
             <button onClick={handleClickCreate} className="create-button">
         <FontAwesomeIcon icon={faPencilAlt} /> Create
       </button>
