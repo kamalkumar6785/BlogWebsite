@@ -62,9 +62,24 @@
 }
 
 .login-button {
-  background-color: blue;
+  background-color: rgb(53, 53, 178);
+}
+
+
+.login-button:hover {
+  background-color: rgb(30, 30, 95);
+}
+
+.logout-button:hover {
+  background-color: rgb(23, 3, 48);
 }
 
 .logout-button {
   background-color: red;
 }
+
+
+.logout-button:hover {
+  background-color: rgb(69, 19, 19);
+}
+

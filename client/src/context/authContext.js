@@ -12,6 +12,7 @@ export const AuthContexProvider = ({ children }) => {
   const baseUrl = 'http://localhost:4000/api';
 
 
+
   const login = async (inputs) => {
     const res = await axios.post(`${baseUrl}/auth/login`, inputs,{
         withCredentials: true, 
@@ -26,6 +27,7 @@ export const AuthContexProvider = ({ children }) => {
         }
     );
     setCurrentUser(null);
+    
   };
 
   useEffect(() => {

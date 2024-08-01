@@ -5,7 +5,7 @@ import './Navbar.css';
 import { AuthContext } from '../../context/authContext';
 
 const Navbar = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleClickLogin = () => {
@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   const handleClickLogout = () => {
-    navigate('/logout'); 
+    logout();
   };
 
   return (
@@ -22,15 +22,20 @@ const Navbar = () => {
         <a href="/">My Blog</a>
       </div>
       <div className="navbar-links">
-        <a href="/category/technology">Technology</a>
-        <a href="/category/science">Science</a>
-        <a href="/category/art">Art</a>
-        <a href="/category/food">Food</a>
+        <a href="/?cat=technology">Technology</a>
+        <a href="/?cat=science">Science</a>
+        <a href="/?cat=art">Art</a>
+        <a href="/?cat=food">Food</a>
+        <a href="/?cat=finance">Finance</a>
+        <a href="/?cat=health">Health</a>
       </div>
       <div className="navbar-actions">
         {currentUser ? (
           <div className="navbar-user">
             <img src={currentUser.profilepic} alt="Profile" className="profile-pic"  style={{height:'50px'}}/>
+            <button onClick={handleClickLogout} className="create-button">
+              Create
+            </button>
             <button onClick={handleClickLogout} className="logout-button">
               Logout
             </button>
