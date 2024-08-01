@@ -1,11 +1,13 @@
 // src/App.js
 import React from 'react';
-import {Home} from './pages/home/Home';
+import Home from './pages/home/Home';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Navbar from './components/navbar/Navbar';
 import Create from './pages/create/Create';
+import '../src/styles.scss'
+import SingleBlog from './pages/SingleBlog/SingleBlog';
 
 function App() {
   const location = useLocation();
@@ -20,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/blog/:id" element={<SingleBlog />} />
 
       </Routes>
     </div>

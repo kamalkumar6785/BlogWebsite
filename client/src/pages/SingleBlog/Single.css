@@ -1,0 +1,113 @@
+/* Styles for SingleBlog component */
+
+/* General container styling */
+.single {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Content area styling */
+  .single .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Post image styling */
+  .single .content img {
+    /* width: 100%; */
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+
+  }
+  
+  /* User info section styling */
+  .single .user {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+  }
+  
+  /* User avatar styling */
+  .single .user img {
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #ddd;
+  }
+  
+  /* User info styling */
+  .single .user .info {
+    flex-grow: 1;
+  }
+  
+  /* User name styling */
+  .single .user .info span {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  /* Post date styling */
+  .single .user .info p {
+    color: #888;
+    font-size: 0.9em;
+    margin: 0;
+  }
+  
+  /* Edit options styling */
+  .single .edit {
+    display: flex;
+    align-items: center;
+  }
+  
+  .single .edit img {
+    cursor: pointer;
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Title styling */
+  .single h1 {
+    font-size: 2.5em;
+    margin: 20px 0;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Post content styling */
+  .single .content p {
+    line-height: 1.6;
+    font-size: 1.1em;
+    color: #555;
+    margin: 20px 0;
+    white-space: pre-wrap; /* Preserve formatting */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .single {
+      padding: 15px;
+    }
+  
+    .single h1 {
+      font-size: 2em;
+    }
+  
+    .single .content img {
+      max-height: 300px;
+    }
+  
+    .single .edit img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  

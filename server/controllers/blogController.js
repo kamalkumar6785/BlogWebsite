@@ -14,10 +14,12 @@ const { db } = require('../database.js');
   });
 };
 
+
+
  const getBlog = (req, res) => 
 {
   const q =
-    "SELECT p.id, `username`, `title`, `content`, p.img, u.img AS userImg, `category`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
+    "SELECT p.id, `username`, `title`, `content`, p.img, u.profilepic AS userImg, `category`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -83,7 +85,7 @@ console.log("done postin")
     const q =
       "UPDATE posts SET `title`=?,`content`=?,`img`=?,`category`=? WHERE `id` = ? AND `uid` = ?";
 
-    const values = [req.body.title, req.body.desc, req.body.img, req.body.category];
+    const values = [req.body.title, req.body.content, req.body.img, req.body.category];
 
     db.query(q, [...values, postId, userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);

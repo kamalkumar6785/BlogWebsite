@@ -8,7 +8,7 @@ import { storage } from "../../Firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "../../styles/Create.css";
 
-const Write = () => {
+const Create = () => {
   const state = useLocation().state;
   const [value, setValue] = useState(state?.content || "");
   const [title, setTitle] = useState(state?.title || "");
@@ -63,7 +63,7 @@ const Write = () => {
 
 
       if (state) {
-        await axios.put(`/posts/${state.id}`, postData,{
+        await axios.put(`${baseUrl}/blog/${state.id}`, postData,{
             withCredentials: true, 
           });
       } else {
@@ -187,9 +187,11 @@ const Write = () => {
             <label htmlFor="news">NEWS 📰</label>
           </div>
 
-          {/* Adding a margin-bottom to the last category */}
-          <div style={{ marginBottom: "20px" }}></div>
-
+<div style={{textAlign:'center', marginTop:'60px'}} >
+    {
+        <img   height={'150px' } style={{borderRadius:'12px'}} src="https://linamed.com/wp-content/themes/dfd-native/assets/images/no_image_resized_675-450.jpg" alt="" />
+    }
+</div>
           <input
             style={{ display: "none" }}
             type="file"
@@ -211,4 +213,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default Create;
