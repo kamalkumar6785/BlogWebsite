@@ -1,0 +1,73 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f5f9; /* Changed to a light, soothing background color */
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px; /* Increased font size for better readability */
+  color: #008080; /* Enhanced teal color */
+  margin-bottom: 30px; /* Increased margin for better spacing */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 10px; /* Added rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+  width: 300px; /* Increased width for better layout */
+  gap: 15px; /* Reduced gap for tighter layout */
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc; /* Changed border to be more noticeable */
+  border-radius: 5px; /* Added rounded corners */
+  outline: none; /* Removed default outline */
+  transition: border-color 0.3s; /* Added transition for smoothness */
+}
+
+input:focus {
+  border-color: #008080; /* Highlight border on focus */
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px; /* Added rounded corners */
+  background-color: #008080;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s; /* Added transition for hover effect */
+}
+
+button:hover {
+  background-color: #006666; /* Darkened color on hover */
+}
+
+p {
+  font-size: 14px; /* Increased font size */
+  color: red;
+  text-align: center;
+}
+
+span {
+  font-size: 14px; /* Increased font size */
+  text-align: center;
+}
+
+span a {
+  color: #008080;
+  text-decoration: none; /* Removed underline from link */
+  transition: color 0.3s; /* Added transition for color change */
+}
+
+span a:hover {
+  color: #006666; /* Changed color on hover */
+}
