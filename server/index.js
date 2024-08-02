@@ -12,8 +12,8 @@ const blogRoutes = require('./routes/blogRoute')
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend URL
-    credentials: true, // Allow credentials (cookies) to be sent
+    origin: 'http://localhost:3000', 
+    credentials: true, 
   }));
   
 

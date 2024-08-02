@@ -7,7 +7,7 @@ import Menu from "../../components/menu/Menu";
 import { AuthContext } from "../../context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import './Single.css';
+import '../../styles/Single.css';
 
 const SingleBlog = () => {
   const [post, setPost] = useState({});
@@ -54,11 +54,12 @@ const SingleBlog = () => {
         <img src={`../upload/${post?.img}`} alt="" />
         <div className="user">
           {1 && <img
-            src='https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'
+            src= {post.userImg}
             alt=""
+            style={{height:'40px'}}
           />}
           <div className="info">
-            <p>Posted {moment(post.date).fromNow()} by {post.username && post.username}</p>
+          <p>Posted {moment(post.date).fromNow()} by <strong>{post.username && post.username}</strong></p>
           </div>
           {currentUser && (currentUser.username === post.username) && (
             <div className="edit">
@@ -75,6 +76,8 @@ const SingleBlog = () => {
           )}
         </div>
         <h1>{post.title}</h1>
+        <img style={{ height: '400px', width: '100%' }} src={post.img} alt="" />
+
         <p
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(post.content),
