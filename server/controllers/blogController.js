@@ -53,7 +53,7 @@ const { db } = require('../database.js');
       return res.json("Post has been created.");
     });
   });
-console.log("done postin")
+console.log("posting done")
 };
 
  const deleteBlog = (req, res) => {

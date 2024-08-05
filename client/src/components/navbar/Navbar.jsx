@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
-
+import logo from '../../asset/pen-tool.png';  
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,10 +24,11 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
+        <img src={logo} style={{height:'20px' }} alt="" />
         <a href="/" style={{color:'#ed1fce'}}>InkSight</a>
       </div>
       <div className="navbar-links">
-        <a href="/?cat=technology">Technology</a>
+        <a href="/?cat=entertainment">Entertainment</a>
         <a href="/?cat=science">Science</a>
         <a href="/?cat=art">Art</a>
         <a href="/?cat=finance">Finance</a>

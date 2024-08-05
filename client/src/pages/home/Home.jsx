@@ -12,8 +12,10 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(category);
       try {
         const res = await axios.get(`${baseUrl}/blog${category}`);
+
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -41,10 +43,13 @@ const Home = () => {
             <div className="post">
               <div className="img-container">
                 <img src={post.img} alt="" className="post-img" />
-                <div className="category-label">{post.category}</div> 
+                <div className="category-label" style={{fontWeight:'bolder'}}>{post.category}</div> 
               </div>
               <div className="Homecontent">
-                <h1>{post.title.slice(0, 20)}</h1>
+                <div style={{minHeight:'70px'}}>
+
+                <h1>{post.title.slice(0, 40) + ".."}</h1>
+                </div>
                 <p>{getText(post.content).slice(0, 120)}...</p>
                 <div style={{ textAlign: "center" }}>
                   <button style={{ backgroundColor: 'black' }}>Read More</button>

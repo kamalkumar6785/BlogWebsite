@@ -27,7 +27,7 @@ const Menu = ({ cat ,currentPostId }) => {
         <Link to={`/blog/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
           <div className="menupost">
             <img src={post.img} alt="" style={{ height: '180px' }} />
-            <h3>{post.title.slice(0, 20)}</h3>
+            <h3>{post.title.slice(0, 20) +"..."}</h3>
           </div>
         </Link>
       ))}
