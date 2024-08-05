@@ -6,7 +6,7 @@ const { db } = require('../database.js');
     const q = req.query.cat
     ? "SELECT * FROM posts WHERE category=?"
     : "SELECT * FROM posts";
-
+    
   db.query(q, [req.query.cat], (err, data) => {
     if (err) return res.status(500).send(err);
 
@@ -53,7 +53,6 @@ const { db } = require('../database.js');
       return res.json("Post has been created.");
     });
   });
-console.log("posting done")
 };
 
  const deleteBlog = (req, res) => {
@@ -76,6 +75,7 @@ console.log("posting done")
 
  const updateBlog = (req, res) => {
   const token = req.cookies.access_token;
+  console.log(req.cookies);
   if (!token) return res.status(401).json("Not authenticated!");
 
   jwt.verify(token, "jwtkey", (err, userInfo) => {

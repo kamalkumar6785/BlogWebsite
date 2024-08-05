@@ -6,11 +6,16 @@ import DOMPurify from "dompurify";
 import Menu from "../../components/menu/Menu";
 import { AuthContext } from "../../context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt,faShareNodes , faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart,faBell } from "@fortawesome/free-regular-svg-icons";
+
 import '../../styles/Single.css';
 
 const SingleBlog = () => {
   const [post, setPost] = useState({});
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLiked,setisLiked] = useState(false);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,6 +24,38 @@ const SingleBlog = () => {
 
   const { currentUser } = useContext(AuthContext);
   const baseUrl = 'http://localhost:4000/api';
+
+  const handleLike =async () => {
+
+    if(isLiked)
+    {
+      try {
+        const res = await axios.post(`${baseUrl}/like/remove`,{postId},{
+          withCredentials: 'true'
+        });
+        setLikeCount(likeCount - 1);
+        setisLiked(false);
+      } catch (err) {
+        console.log(err);
+      }
+     
+    }else
+    {
+    const res = await axios.post(`${baseUrl}/like/add`,{postId},{
+      withCredentials: 'true'
+    });
+
+      setLikeCount(likeCount + 1);
+      setisLiked(true);
+    }
+  };
+
+  const likeButtonStyle = {
+    color:isLiked?'red':'black',
+    fontSize: '30px',
+    cursor: 'pointer',
+    transition: 'color 0.3s',
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +66,31 @@ const SingleBlog = () => {
         console.log(err);
       }
     };
+
+    const fetchLikes = async ()=>{
+      try {
+
+        const res = await axios.put(`${baseUrl}/like/likes`,{postId},{  withCredentials:'true'  }  )
+        setLikeCount(res.data.likeCount);
+
+      } catch (err) {
+        
+      }
+    }
+
+    const fetchHasLiked = async ()=>{
+      try {
+        const res = await axios.put(`${baseUrl}/like/liked`,{postId},{  withCredentials:'true'  }  )
+        
+        setisLiked(res.data.liked);  
+      }
+         catch (error) {
+      }
+    }
     fetchData();
+    fetchLikes();
+    fetchHasLiked();
+
   }, [postId]);
 
   const handleDelete = async () => {
@@ -83,7 +144,23 @@ const SingleBlog = () => {
             __html: DOMPurify.sanitize(post.content),
           }}
         ></p>
-      </div>
+   <div style={{ fontSize: '29px'}}>
+      <span
+        style={likeButtonStyle}
+        onClick={handleLike}
+      >
+            {isLiked ? <FontAwesomeIcon icon={solidHeart} /> : <FontAwesomeIcon icon={regularHeart} />}
+            </span>
+      {` ${likeCount}`}
+
+
+      <button style={{marginLeft:'200px',background:'black',color:'gold',fontWeight:'bolder'}}>Subscribe
+      <FontAwesomeIcon icon={faBell} style={{marginLeft:'6px'}}/>
+      </button>
+      <span style={{fontSize:'30px',marginLeft:'200px',color:'blue'}}><FontAwesomeIcon icon={faShareNodes} /> </span>
+    </div>
+
+  </div>
       <Menu cat={post.category} currentPostId={post.id} />
     </div>
   );
