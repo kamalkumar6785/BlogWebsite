@@ -1,0 +1,36 @@
+.not-authenticated {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .not-authenticated h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .not-authenticated p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #666;
+  }
+  
+  .login-redirect-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-redirect-button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenNib } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-import "../../styles/Home.css"; // Reusing the same CSS as Register
+import "../../styles/Home.css"; 
 
 const Home = () => {
   const [posts, setPosts] = useState([]);

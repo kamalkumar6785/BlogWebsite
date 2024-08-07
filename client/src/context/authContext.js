@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -20,14 +21,20 @@ export const AuthContexProvider = ({ children }) => {
     setCurrentUser(res.data);
   };
 
-  const logout = async (inputs) => {
-    await axios.post(`${baseUrl}/auth/logout`,
-        {
-            withCredentials: true, 
-        }
-    );
-    setCurrentUser(null);
-    
+  const logout = async (inputs) => 
+  {
+    try {
+      await axios.post(`${baseUrl}/auth/logout`, {}, {
+        withCredentials: true,
+      });
+
+      setCurrentUser(null);
+
+      Object.keys(Cookies.get()).forEach(cookieName => Cookies.remove(cookieName));
+      
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

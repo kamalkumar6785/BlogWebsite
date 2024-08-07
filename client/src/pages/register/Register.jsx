@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../styles/Register.css';
-import { storage } from "../../Firebase"; // Import Firebase storage
+import { storage } from "../../Firebase"; 
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -63,8 +65,15 @@ const Register = () => {
     }
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="auth">
+      <div className="home-icon" onClick={handleHomeClick}>
+        <FontAwesomeIcon icon={faHome} />
+      </div>
       <h1>Register</h1>
       <form>
         <input

@@ -47,8 +47,7 @@ const Navbar = () => {
             <button onClick={handleClickCreate} className="create-button">
         <FontAwesomeIcon icon={faPencilAlt} /> Create
       </button>
-            <button onClick={handleClickLogout} className="logout-button">
-            Logout&nbsp; 
+            <button title='Logout' onClick={handleClickLogout} className="logout-button">
             <FontAwesomeIcon icon={faSignOutAlt} /> 
             </button>
 

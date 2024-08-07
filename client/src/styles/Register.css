@@ -44,7 +44,14 @@ input[type="password"] {
   color: #666;
   font-size: 16px;
 }
-
+.home-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #03080e;
+}
 button {
   padding: 10px;
   border: none;

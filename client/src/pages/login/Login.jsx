@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../styles/Login.css'; // Reusing the same CSS as Register
 import { AuthContext } from "../../context/authContext";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const Login = () => {
@@ -34,8 +36,15 @@ const Login = () => {
     }
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
   return (
     <div className="auth">
+            <div className="home-icon" onClick={handleHomeClick}>
+        <FontAwesomeIcon icon={faHome} />
+      </div>
+
       <h1>Login</h1>
       <form>
         <input

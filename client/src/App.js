@@ -6,8 +6,9 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Navbar from './components/navbar/Navbar';
 import Create from './pages/create/Create';
-import '../src/styles.scss'
 import SingleBlog from './pages/SingleBlog/SingleBlog';
+import NotFound from './pages/notfound/Notfound';
+import '../src/styles.scss';
 
 function App() {
   const location = useLocation();
@@ -23,7 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<Create />} />
         <Route path="/blog/:id" element={<SingleBlog />} />
-
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
