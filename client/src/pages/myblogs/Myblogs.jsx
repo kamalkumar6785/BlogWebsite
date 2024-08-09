@@ -5,16 +5,16 @@ import axios from "axios";
 import "../../styles/Home.css"; 
 import Postcard from "../../components/postcard/Postcard";
 
-const Home = () => {
+const Myblogs = () => {
   const [posts, setPosts] = useState([]);
-  const category = useLocation().search;
   const baseUrl = "http://localhost:4000/api";
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(category);
       try {
-        const res = await axios.get(`${baseUrl}/blog${category}`);
+        const res = await axios.put(`${baseUrl}/blog/myblogs` ,{}, {
+            withCredentials: true,
+          }) ;
 
         setPosts(res.data);
       } catch (err) {
@@ -22,22 +22,25 @@ const Home = () => {
       }
     };
     fetchData();
-  }, [category]);
+  }, []);
 
 
 
   return (
     <div className="home">
-
+    
+    <div style={{textAlign:'center'}}>
+        <h1>My Blogs</h1>
+    </div>
     {posts.length? <div className="posts">
         {posts.map((post) => (
         <Postcard key={post.id} post ={post}/>
         ))}
-      </div> : <div style={{textAlign:'center', marginTop:'20px'}}>No Related Post Fount 😢</div>}
+      </div> : <div style={{textAlign:'center', marginTop:'20px'}}>No Bookmarks Found 😢</div>}
 
       
     </div>
   );
 };
 
-export default Home;
+export default Myblogs;

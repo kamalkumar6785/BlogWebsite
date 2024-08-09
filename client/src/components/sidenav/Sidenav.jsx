@@ -8,8 +8,7 @@ const SideNav = ({ isOpen, toggleNav }) => {
   const navigate = useNavigate();
 
   const handleClickLogin = () => {
-    isOpen = false;
-    console.log("clicked");
+    toggleNav();
     navigate("/login");
   };
 
@@ -17,6 +16,7 @@ const SideNav = ({ isOpen, toggleNav }) => {
     toggleNav()
     logout();
   };
+  
   const handleClickCreate = () => {
     toggleNav()
     navigate("/create");
@@ -27,6 +27,10 @@ const SideNav = ({ isOpen, toggleNav }) => {
     navigate("/bookmarks");
   };
 
+  const handleClickMyBlogs = () => {
+    toggleNav()
+    navigate("/myblogs");
+  };
 
 
 
@@ -42,8 +46,6 @@ const SideNav = ({ isOpen, toggleNav }) => {
         &times;
       </button>
 
-      {/* <Link to="/" onClick={toggleNav}>Home</Link> */}
-
       {currentUser ? (
         <div>
           <p  onClick={handleClickCreate}>
@@ -52,7 +54,7 @@ const SideNav = ({ isOpen, toggleNav }) => {
           <p  onClick={handleClickBookmark}>
             Bookmarks
           </p>
-          <p>
+          <p onClick={handleClickMyBlogs}>
             My Blogs
           </p>
           <p onClick={handleClickLogout}>Logout</p>

@@ -53,7 +53,6 @@ const { db } = require('../database.js');
       return res.json("Post has been created.");
     });
   });
-console.log("posting done")
 };
 
  const deleteBlog = (req, res) => {
@@ -107,7 +106,6 @@ const bookmarkBlog = (req, res) =>
   
       const q = "INSERT INTO bookmarks (`userid`, `postid`) VALUES (?, ?)";
       const values = [userInfo.id, req.body.postId];
-      console.log(values)
 
       db.query(q, values, (err, data) => {
         if (err) {
@@ -135,7 +133,6 @@ const bookmarkBlog = (req, res) =>
       const q = "DELETE FROM bookmarks WHERE `userid` = ? AND `postid` = ?";
       const values = [userInfo.id, req.body.postId];
   
-      console.log(values)
       db.query(q, values, (err, data) => {
         if (err) return res.status(500).json(err);
   
@@ -191,6 +188,23 @@ const bookmarkBlog = (req, res) =>
         });
     });
 };
+const getmyBlogs = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json("Not authenticated!");
+
+  jwt.verify(token, "jwtkey", (err, userInfo) => {
+      if (err) return res.status(403).json("Token is not valid!");
+
+      const q = "SELECT * FROM posts WHERE uid = ?";
+      const values = [userInfo.id];
+
+      db.query(q, values, (err, data) => {
+          if (err) return res.status(500).json(err);
+
+          return res.status(200).json(data);
+      });
+  });
+};
 
 module.exports = {
     getBlog,
@@ -201,6 +215,7 @@ module.exports = {
     bookmarkBlog,
     unbookmakrBlog,
     hasbookmarked,
-    bookmarkedBlogs
+    bookmarkedBlogs,
+    getmyBlogs
   };
   

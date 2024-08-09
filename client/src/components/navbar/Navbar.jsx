@@ -21,7 +21,7 @@ const Navbar = () => {
         <a href="/" style={{color:'#ed1fce'}}>InkSight</a>
       </div>
       <div className="navbar-links">
-        <a href="/?cat=entertainment">Entertainment</a>
+        <a href="/?cat=entertainment" style={{fontWeight:'bolder'}}>Entertainment</a>
         <a href="/?cat=science">Science</a>
         <a href="/?cat=art">Art</a>
         <a href="/?cat=finance">Finance</a>

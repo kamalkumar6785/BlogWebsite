@@ -12,6 +12,8 @@ const Bookmarked = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+
+        
       try {
 
         const res = await axios.put(`${baseUrl}/bookmark/bookmarked` ,{}, {
@@ -25,7 +27,7 @@ const Bookmarked = () => {
       }
     };
     fetchData();
-  }, [category]);
+  }, []);
 
 
 
@@ -33,11 +35,11 @@ const Bookmarked = () => {
     <div className="home">
     
     <div style={{textAlign:'center'}}>
-        <h1>Bookmarks</h1>
+        <h1>My Bookmarks</h1>
     </div>
     {posts.length? <div className="posts">
         {posts.map((post) => (
-        <Postcard post ={post}/>
+        <Postcard key={post.id} post ={post}/>
         ))}
       </div> : <div style={{textAlign:'center', marginTop:'20px'}}>No Bookmarks Found 😢</div>}
 
