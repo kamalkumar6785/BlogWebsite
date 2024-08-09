@@ -6,7 +6,7 @@ const { db } = require('../database.js');
     const q = req.query.cat
     ? "SELECT * FROM posts WHERE category=?"
     : "SELECT * FROM posts";
-    
+
   db.query(q, [req.query.cat], (err, data) => {
     if (err) return res.status(500).send(err);
 
@@ -53,12 +53,14 @@ const { db } = require('../database.js');
       return res.json("Post has been created.");
     });
   });
+console.log("posting done")
 };
 
  const deleteBlog = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json("Not authenticated!");
 
+  
   jwt.verify(token, "jwtkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
@@ -75,7 +77,6 @@ const { db } = require('../database.js');
 
  const updateBlog = (req, res) => {
   const token = req.cookies.access_token;
-  console.log(req.cookies);
   if (!token) return res.status(401).json("Not authenticated!");
 
   jwt.verify(token, "jwtkey", (err, userInfo) => {
@@ -95,11 +96,111 @@ const { db } = require('../database.js');
 };
 
 
+
+const bookmarkBlog = (req, res) => 
+  {   
+    const token = req.cookies.access_token;
+    if (!token) return res.status(401).json("Not authenticated!");
+  
+    jwt.verify(token, "jwtkey", (err, userInfo) => {
+      if (err) return res.status(403).json("Token is not valid!");
+  
+      const q = "INSERT INTO bookmarks (`userid`, `postid`) VALUES (?, ?)";
+      const values = [userInfo.id, req.body.postId];
+      console.log(values)
+
+      db.query(q, values, (err, data) => {
+        if (err) {
+          if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json("Already bookmarked.");
+          }
+          return res.status(500).json(err);
+        }
+  
+        return res.status(201).json("Bookmarked successfully");
+      });
+    });
+  };
+
+  
+  const unbookmakrBlog = (req, res) => {
+
+    const token = req.cookies.access_token;
+
+    if (!token) return res.status(401).json("Not authenticated!");
+  
+    jwt.verify(token, "jwtkey", (err, userInfo) => {
+      if (err) return res.status(403).json("Token is not valid!");
+  
+      const q = "DELETE FROM bookmarks WHERE `userid` = ? AND `postid` = ?";
+      const values = [userInfo.id, req.body.postId];
+  
+      console.log(values)
+      db.query(q, values, (err, data) => {
+        if (err) return res.status(500).json(err);
+  
+        return res.status(200).json("Removed Bookmark successfully.");
+      });
+    });
+  };
+  
+
+  const hasbookmarked = (req, res) => {
+
+    const token = req.cookies.access_token;
+    if (!token) return res.status(401).json("Not authenticated!");
+  
+    jwt.verify(token, "jwtkey", (err, userInfo) => {
+      if (err) return res.status(403).json("Token is not valid!");
+      const q = "SELECT COUNT(*) AS bookmarked FROM bookmarks WHERE userid = ? AND postid = ?";
+      const values = [userInfo.id, req.body.postId];
+
+      db.query(q, values, (err, data) => 
+      {
+        if (err) return res.status(500).json(err);
+        const bookmarked = data[0].bookmarked > 0;
+        return res.status(200).json({ bookmarked });
+      });
+
+    });
+  };
+
+
+
+  
+  const bookmarkedBlogs = (req, res) => {
+    const token = req.cookies.access_token;
+    if (!token) return res.status(401).json("Not authenticated!");
+
+    jwt.verify(token, "jwtkey", (err, userInfo) => {
+        if (err) return res.status(403).json("Token is not valid!");
+
+        const q = `
+            SELECT p.id, p.title, p.content, p.img, p.category, p.date 
+            FROM posts p 
+            JOIN bookmarks b ON p.id = b.postid 
+            WHERE b.userid = ?
+        `;
+
+        const values = [userInfo.id];
+
+        db.query(q, values, (err, data) => {
+            if (err) return res.status(500).json(err);
+
+            return res.status(200).json(data);
+        });
+    });
+};
+
 module.exports = {
     getBlog,
     getBlogs,
     addBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    bookmarkBlog,
+    unbookmakrBlog,
+    hasbookmarked,
+    bookmarkedBlogs
   };
   

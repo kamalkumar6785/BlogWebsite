@@ -5,17 +5,20 @@ import axios from "axios";
 import "../../styles/Home.css"; 
 import Postcard from "../../components/postcard/Postcard";
 
-const Home = () => {
+const Bookmarked = () => {
   const [posts, setPosts] = useState([]);
   const category = useLocation().search;
   const baseUrl = "http://localhost:4000/api";
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(category);
       try {
-        const res = await axios.get(`${baseUrl}/blog${category}`);
 
+        const res = await axios.put(`${baseUrl}/bookmark/bookmarked` ,{}, {
+            withCredentials: true,
+          }) ;
+
+        
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -28,16 +31,19 @@ const Home = () => {
 
   return (
     <div className="home">
-
+    
+    <div style={{textAlign:'center'}}>
+        <h1>Bookmarks</h1>
+    </div>
     {posts.length? <div className="posts">
         {posts.map((post) => (
         <Postcard post ={post}/>
         ))}
-      </div> : <div style={{textAlign:'center', marginTop:'20px'}}>No Related Post Fount 😢</div>}
+      </div> : <div style={{textAlign:'center', marginTop:'20px'}}>No Bookmarks Found 😢</div>}
 
       
     </div>
   );
 };
 
-export default Home;
+export default Bookmarked;

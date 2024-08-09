@@ -1,10 +1,14 @@
 const express = require('express');
-const  {
+const  
+{
   addBlog,
   deleteBlog,
   getBlog,
   getBlogs,
   updateBlog,
+  hasbookmarked,
+  bookmarkBlog,
+  unbookmakrBlog
 } =  require('../controllers/blogController.js');
 
 const router = express.Router();
@@ -13,6 +17,5 @@ router.get("/:id", getBlog);
 router.post("/", addBlog);
 router.delete("/:id", deleteBlog);
 router.put("/:id", updateBlog);
-
 
 module.exports = router;

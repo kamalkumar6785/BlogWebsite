@@ -4,6 +4,7 @@ const app = express();
 const authRoutes = require('./routes/authRoute')
 const blogRoutes = require('./routes/blogRoute')
 const likeRoutes = require('./routes/likeRoutes')
+const bookmarkRoutes = require('./routes/bookmarkroutes');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended:false}));
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/bookmark", bookmarkRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/like", likeRoutes);
 

@@ -8,6 +8,7 @@ import Navbar from './components/navbar/Navbar';
 import Create from './pages/create/Create';
 import SingleBlog from './pages/SingleBlog/SingleBlog';
 import NotFound from './pages/notfound/Notfound';
+import Bookmarked from './pages/bookmarked/Bookmarked';
 import '../src/styles.scss';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/bookmarks" element={<Bookmarked />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<Create />} />

@@ -6,7 +6,7 @@ import DOMPurify from "dompurify";
 import Menu from "../../components/menu/Menu";
 import { AuthContext } from "../../context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashAlt, faShareNodes, faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faBookmark,faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart, faBell } from "@fortawesome/free-regular-svg-icons";
 import ShareButton from "../../components/sharebutton/Sharebutton";
 import '../../styles/Single.css';
@@ -18,6 +18,7 @@ const SingleBlog = () => {
   const [post, setPost] = useState({});
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
+  const [isBookmarked,setIsBookmarked] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,6 +47,28 @@ const SingleBlog = () => {
     } catch (err) {
       toast.error("An error occurred");
     }
+  };
+
+
+  const handleBookmark = async () => {
+
+    if(!currentUser)
+    {
+      navigate('/login');
+    }
+    try {
+      if (isBookmarked) {
+        await axios.put(`${baseUrl}/bookmark/delete`, { postId }, { withCredentials: true });
+        setIsBookmarked(false);
+      } else {
+        await axios.put(`${baseUrl}/bookmark/add`, { postId }, { withCredentials: true });
+        setIsBookmarked(true);
+      }
+    } catch (err) {
+      toast.error("An error occurred");
+
+    }
+    
   };
 
   const likeButtonStyle = {
@@ -78,14 +101,32 @@ const SingleBlog = () => {
       try {
         const res = await axios.put(`${baseUrl}/like/liked`, { postId }, { withCredentials: 'true' });
         setIsLiked(res.data.liked);
+
       } catch (err) {
         console.log(err);
       }
     }
 
+
+    const fetchHasBookmarked = async () => {
+      try 
+      {
+        const res = await axios.put(`${baseUrl}/bookmark`, { postId }, { withCredentials: 'true' });
+        setIsBookmarked(res.data.bookmarked);
+        console.log(res.data.bookmarked)
+      } 
+      catch (err) 
+      {
+        console.log(err);
+      }
+    }
+
+
     fetchData();
     fetchLikes();
     fetchHasLiked();
+    fetchHasBookmarked();
+    
   }, [postId]);
 
   const handleDelete = async () => {
@@ -138,6 +179,11 @@ const SingleBlog = () => {
                 style={{ textDecoration: 'none', color: 'red', height: '23px', marginLeft: '5px', cursor: 'pointer' }}
                 onClick={handleDelete}
               />
+                <FontAwesomeIcon icon={faBookmark} onClick={handleBookmark}
+                style={{ textDecoration: 'none', color: isBookmarked?'blue':'grey', height: '30px', marginLeft: '15px', cursor: 'pointer' }}
+                />
+
+              
             </div>
           )}
         </div>
@@ -156,7 +202,7 @@ const SingleBlog = () => {
             {isLiked ? <FontAwesomeIcon icon={solidHeart} /> : <FontAwesomeIcon icon={regularHeart} />}
           </span>
           {` ${likeCount}`}
-          <button style={{ marginLeft: '200px', background: 'black', color: 'gold', fontWeight: 'bolder' }}>Subscribe
+          <button style={{ marginLeft: '200px', background: 'black', color: isBookmarked?'gold':'grey', fontWeight: 'bolder' }}>Subscribe
             <FontAwesomeIcon icon={faBell} style={{ marginLeft: '6px' }} />
           </button>
           <span style={{ marginLeft: '200px', fontSize: '30px' }}>

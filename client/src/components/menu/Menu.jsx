@@ -3,11 +3,14 @@ import axios from "axios";
 import "./Menu.css"; 
 import { Link } from 'react-router-dom';
 
-const Menu = ({ cat ,currentPostId }) => {
+const Menu = ({ cat ,currentPostId }) => 
+  {
+  
   const [posts, setPosts] = useState([]);
   const baseUrl = 'http://localhost:4000/api';
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${baseUrl}/blog/?cat=${cat}`);

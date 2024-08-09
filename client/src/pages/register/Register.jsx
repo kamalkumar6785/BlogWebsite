@@ -16,6 +16,7 @@ const Register = () => {
   });
   const baseUrl = 'http://localhost:4000/api';
   const [err, setError] = useState(null);
+  const [validationErrors, setValidationErrors] = useState({});
   const [fileName, setFileName] = useState("");
   const navigate = useNavigate();
 
@@ -29,8 +30,32 @@ const Register = () => {
     setFileName(e.target.files[0]?.name || "");
   };
 
+  const validate = () => {
+    const errors = {};
+    if (!inputs.username.trim()) {
+      errors.username = "Username is required";
+    }
+    if (!inputs.email) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
+      errors.email = "Email address is invalid";
+    }
+    if (!inputs.password) {
+      errors.password = "Password is required";
+    } else if (inputs.password.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+    return errors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+    setValidationErrors({});
 
     if (inputs.profilepic) {
       const storageRef = ref(storage, `profile_pics/${inputs.profilepic.name}`);
@@ -83,6 +108,7 @@ const Register = () => {
           name="username"
           onChange={handleChange}
         />
+        {validationErrors.username && <p className="error">{validationErrors.username}</p>}
         <input
           required
           type="email"
@@ -90,6 +116,7 @@ const Register = () => {
           name="email"
           onChange={handleChange}
         />
+        {validationErrors.email && <p className="error">{validationErrors.email}</p>}
         <input
           required
           type="password"
@@ -97,6 +124,7 @@ const Register = () => {
           name="password"
           onChange={handleChange}
         />
+        {validationErrors.password && <p className="error">{validationErrors.password}</p>}
         <div className="upload-section">
           <label htmlFor="file-upload" className="file-upload-label">
             <span className="upload-text">
