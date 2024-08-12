@@ -1,1 +1,1 @@
-To see new changes, switch to branch 'newchanges'
+⭐  To see new changes, switch to branch 'newbranch'
